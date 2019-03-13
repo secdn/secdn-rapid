@@ -28,11 +28,6 @@ CREATE TABLE `sys_captcha`  (
   PRIMARY KEY (`uuid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统验证码' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of sys_captcha
--- ----------------------------
-INSERT INTO `sys_captcha` VALUES ('086cdee4-ea75-4a82-84fa-2e916dcf8535', '6ff6f', '2019-03-12 13:19:12');
-INSERT INTO `sys_captcha` VALUES ('2ae07a5c-6a2a-44c0-8ccc-4eb32ae94dff', 'b8gb6', '2019-03-11 14:48:01');
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -69,32 +64,7 @@ CREATE TABLE `sys_log`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统日志' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of sys_log
--- ----------------------------
-INSERT INTO `sys_log` VALUES (1, 'admin', '修改菜单', 'io.renren.modules.sys.controller.SysMenuController.update()', '[{\"menuId\":31,\"parentId\":1,\"name\":\"文章管理\",\"url\":\"app/apparticle\",\"type\":1,\"icon\":\"config\",\"orderNum\":6}]', 22, '192.168.137.252', '2019-03-11 14:45:17');
-INSERT INTO `sys_log` VALUES (2, 'admin', '修改菜单', 'io.renren.modules.sys.controller.SysMenuController.update()', '[{\"menuId\":36,\"parentId\":1,\"name\":\"栏目管理\",\"url\":\"app/apptype\",\"type\":1,\"icon\":\"config\",\"orderNum\":6}]', 6, '192.168.137.252', '2019-03-11 14:45:38');
-INSERT INTO `sys_log` VALUES (3, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":41,\"parentId\":0,\"name\":\"文章管理\",\"url\":\"\",\"perms\":\"\",\"type\":0,\"icon\":\"menu\",\"orderNum\":0}]', 18, '192.168.137.252', '2019-03-11 14:51:11');
-INSERT INTO `sys_log` VALUES (4, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":42,\"parentId\":41,\"name\":\"文章列表\",\"url\":\"app/apparticle\",\"perms\":\"\",\"type\":1,\"icon\":\"zhedie\",\"orderNum\":6}]', 7, '192.168.137.252', '2019-03-11 14:52:46');
-INSERT INTO `sys_log` VALUES (5, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":43,\"parentId\":41,\"name\":\"栏目管理\",\"url\":\"app/apptype\",\"perms\":\"\",\"type\":1,\"icon\":\"editor\",\"orderNum\":6}]', 7, '192.168.137.252', '2019-03-11 14:53:28');
-INSERT INTO `sys_log` VALUES (6, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":44,\"parentId\":42,\"name\":\"查看\",\"perms\":\"app:apparticle:list,app:apparticle:info\",\"type\":2,\"orderNum\":6}]', 40, '192.168.137.252', '2019-03-11 14:54:07');
-INSERT INTO `sys_log` VALUES (7, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":45,\"parentId\":42,\"name\":\"查看\",\"perms\":\"app:apparticle:list,app:apparticle:info\",\"type\":2,\"orderNum\":6}]', 38, '192.168.137.252', '2019-03-11 14:54:07');
-INSERT INTO `sys_log` VALUES (8, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":46,\"parentId\":31,\"name\":\"新增\",\"perms\":\"app:apparticle:save\",\"type\":2,\"orderNum\":6}]', 9, '192.168.137.252', '2019-03-11 14:54:30');
-INSERT INTO `sys_log` VALUES (9, 'admin', '修改菜单', 'io.renren.modules.sys.controller.SysMenuController.update()', '[{\"menuId\":45,\"parentId\":42,\"name\":\"新增\",\"perms\":\"app:apparticle:list,app:apparticle:info\",\"type\":2,\"orderNum\":6}]', 13, '192.168.137.252', '2019-03-11 14:55:33');
-INSERT INTO `sys_log` VALUES (10, 'admin', '修改菜单', 'io.renren.modules.sys.controller.SysMenuController.update()', '[{\"menuId\":45,\"parentId\":42,\"name\":\"新增\",\"perms\":\"app:apparticle:save\",\"type\":2,\"orderNum\":6}]', 6, '192.168.137.252', '2019-03-11 14:55:51');
-INSERT INTO `sys_log` VALUES (11, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":47,\"parentId\":42,\"name\":\"修改\",\"perms\":\"app:apparticle:update\",\"type\":2,\"orderNum\":6}]', 7, '192.168.137.252', '2019-03-11 14:56:06');
-INSERT INTO `sys_log` VALUES (12, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":48,\"parentId\":42,\"name\":\"删除\",\"perms\":\"app:apparticle:delete\",\"type\":2,\"orderNum\":6}]', 5, '192.168.137.252', '2019-03-11 14:56:17');
-INSERT INTO `sys_log` VALUES (13, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":49,\"parentId\":43,\"name\":\"查看\",\"perms\":\"app:apptype:list,app:apptype:info\",\"type\":2,\"orderNum\":6}]', 9, '192.168.137.252', '2019-03-11 14:56:47');
-INSERT INTO `sys_log` VALUES (14, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":50,\"parentId\":43,\"name\":\"新增\",\"perms\":\"app:apptype:save\",\"type\":2,\"orderNum\":6}]', 9, '192.168.137.252', '2019-03-11 14:56:57');
-INSERT INTO `sys_log` VALUES (15, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":51,\"parentId\":43,\"name\":\"修改\",\"perms\":\"app:apptype:update\",\"type\":2,\"orderNum\":6}]', 5, '192.168.137.252', '2019-03-11 14:57:10');
-INSERT INTO `sys_log` VALUES (16, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":52,\"parentId\":43,\"name\":\"删除\",\"perms\":\"app:apptype:delete\",\"type\":2,\"orderNum\":6}]', 5, '192.168.137.252', '2019-03-11 14:57:20');
-INSERT INTO `sys_log` VALUES (17, 'admin', '删除菜单', 'io.renren.modules.sys.controller.SysMenuController.delete()', '[31]', 0, '192.168.137.252', '2019-03-11 14:57:27');
-INSERT INTO `sys_log` VALUES (18, 'admin', '删除菜单', 'io.renren.modules.sys.controller.SysMenuController.delete()', '[46]', 66, '192.168.137.252', '2019-03-11 15:07:26');
-INSERT INTO `sys_log` VALUES (19, 'admin', '删除菜单', 'io.renren.modules.sys.controller.SysMenuController.delete()', '[52]', 29, '192.168.137.252', '2019-03-11 16:48:51');
-INSERT INTO `sys_log` VALUES (20, 'admin', '保存菜单', 'io.renren.modules.sys.controller.SysMenuController.save()', '[{\"menuId\":53,\"parentId\":43,\"name\":\"删除\",\"perms\":\"app:apptype:delete\",\"type\":2,\"orderNum\":6}]', 7, '192.168.137.252', '2019-03-11 16:49:21');
-INSERT INTO `sys_log` VALUES (21, 'admin', '立即执行任务', 'io.renren.modules.job.controller.ScheduleJobController.run()', '[[2]]', 20, '192.168.137.252', '2019-03-11 17:33:23');
-INSERT INTO `sys_log` VALUES (22, 'admin', '保存用户', 'io.renren.modules.sys.controller.SysUserController.save()', '[{\"userId\":2,\"username\":\"admin2\",\"password\":\"4759d24c199795f5fdc1dcc99bea071cd5d357b6f3cf91dc21d81c5f3ebb6cf9\",\"salt\":\"QxCtBWm7qvjF8hZmEjN6\",\"email\":\"123@root.com\",\"mobile\":\"13800138000\",\"status\":1,\"roleIdList\":[],\"createUserId\":1,\"createTime\":\"Mar 11, 2019 6:28:20 PM\"}]', 142, '192.168.137.164', '2019-03-11 18:28:20');
-INSERT INTO `sys_log` VALUES (23, 'admin', '删除用户', 'io.renren.modules.sys.controller.SysUserController.delete()', '[[2]]', 6, '192.168.137.164', '2019-03-11 18:28:32');
+
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -144,17 +114,6 @@ INSERT INTO `sys_menu` VALUES (26, 4, '删除', NULL, 'sys:menu:delete', 2, NULL
 INSERT INTO `sys_menu` VALUES (27, 1, '参数管理', 'sys/config', 'sys:config:list,sys:config:info,sys:config:save,sys:config:update,sys:config:delete', 1, 'config', 6);
 INSERT INTO `sys_menu` VALUES (29, 1, '系统日志', 'sys/log', 'sys:log:list', 1, 'log', 7);
 INSERT INTO `sys_menu` VALUES (30, 1, '文件上传', 'oss/oss', 'sys:oss:all', 1, 'oss', 6);
-INSERT INTO `sys_menu` VALUES (41, 0, '文章管理', NULL, NULL, 0, 'menu', 0);
-INSERT INTO `sys_menu` VALUES (42, 41, '文章列表', 'app/apparticle', NULL, 1, 'zhedie', 6);
-INSERT INTO `sys_menu` VALUES (43, 41, '栏目管理', 'app/apptype', NULL, 1, 'editor', 6);
-INSERT INTO `sys_menu` VALUES (44, 42, '查看', NULL, 'app:apparticle:list,app:apparticle:info', 2, NULL, 6);
-INSERT INTO `sys_menu` VALUES (45, 42, '新增', NULL, 'app:apparticle:save', 2, NULL, 6);
-INSERT INTO `sys_menu` VALUES (47, 42, '修改', NULL, 'app:apparticle:update', 2, NULL, 6);
-INSERT INTO `sys_menu` VALUES (48, 42, '删除', NULL, 'app:apparticle:delete', 2, NULL, 6);
-INSERT INTO `sys_menu` VALUES (49, 43, '查看', NULL, 'app:apptype:list,app:apptype:info', 2, NULL, 6);
-INSERT INTO `sys_menu` VALUES (50, 43, '新增', NULL, 'app:apptype:save', 2, NULL, 6);
-INSERT INTO `sys_menu` VALUES (51, 43, '修改', NULL, 'app:apptype:update', 2, NULL, 6);
-INSERT INTO `sys_menu` VALUES (53, 43, '删除', NULL, 'app:apptype:delete', 2, NULL, 6);
 
 -- ----------------------------
 -- Table structure for sys_oss
@@ -238,10 +197,6 @@ CREATE TABLE `sys_user_token`  (
   UNIQUE INDEX `token`(`token`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统用户Token' ROW_FORMAT = Dynamic;
 
--- ----------------------------
--- Records of sys_user_token
--- ----------------------------
-INSERT INTO `sys_user_token` VALUES (1, 'dd8cc6cdd7d9052eedccf75acfd978ec', '2019-03-13 03:19:36', '2019-03-12 15:19:36');
 
 -- ----------------------------
 -- Table structure for tb_user
