@@ -4,7 +4,7 @@ spring:
         driverClassName: com.mysql.jdbc.Driver
         druid:
             first:  #数据源1
-                url: jdbc:mysql://localhost:3306/secdn_rapid?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+                url: jdbc:mysql://localhost:3306/secdn_rapid?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
                 username: ulegal
                 password: Ulegal888
                 initial-size: 10
@@ -28,7 +28,7 @@ spring:
                         config:
                             multi-statement-allow: true
             second:  #数据源2
-                url: jdbc:mysql://localhost:3306/secdn_rapid?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+                url: jdbc:mysql://localhost:3306/secdn_rapid?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
                 username: ulegal
                 password: Ulegal888
                 initial-size: 10
