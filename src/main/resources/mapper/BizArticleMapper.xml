@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secdn.secdnrapid.modules.business.mapper.BizArticleMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.secdn.secdnrapid.modules.business.bean.BizArticle">
+                    <id column="id" property="id" />
+                    <result column="title" property="title" />
+                    <result column="user_id" property="userId" />
+                    <result column="cover_image" property="coverImage" />
+                    <result column="qrcode_path" property="qrcodePath" />
+                    <result column="is_markdown" property="isMarkdown" />
+                    <result column="content" property="content" />
+                    <result column="content_md" property="contentMd" />
+                    <result column="top" property="top" />
+                    <result column="type_id" property="typeId" />
+                    <result column="status" property="status" />
+                    <result column="description" property="description" />
+                    <result column="keywords" property="keywords" />
+                    <result column="comment" property="comment" />
+                    <result column="create_time" property="createTime" />
+                    <result column="update_time" property="updateTime" />
+                    <result column="approval" property="approval" />
+                    <result column="approval_comment" property="approvalComment" />
+                    <result column="department" property="department" />
+                    <result column="subtitle" property="subtitle" />
+                    <result column="author" property="author" />
+                    <result column="release_time" property="releaseTime" />
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+        id, title, user_id, cover_image, qrcode_path, is_markdown, content, content_md, top, type_id, status, description, keywords, comment, create_time, update_time, approval, approval_comment, department, subtitle, author, release_time
+    </sql>
+
+    <select id="selectPageWithParam" resultType="com.secdn.secdnrapid.modules.business.bean.BizArticle" parameterType="com.secdn.secdnrapid.modules.business.bean.BizArticle">
+        select
+            <include refid="Base_Column_List"/>
+        from biz_article
+    </select>
+
+    <select id="selectOneByObj" resultType="com.secdn.secdnrapid.modules.business.bean.BizArticle" parameterType="java.lang.Long">
+        select
+            <include refid="Base_Column_List"/>
+        from biz_article
+        <where>
+            id = #{id, jdbcType=VARCHAR}
+        </where>
+    </select>
+</mapper>

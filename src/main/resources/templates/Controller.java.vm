@@ -1,0 +1,123 @@
+package ${package.Controller};
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.secdn.secdnrapid.common.utils.MessageVoUtil;
+import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.vo.MessageVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.*;
+
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+
+
+
+/**
+ *
+ *   @description : ${entity} 控制器
+ *   ---------------------------------
+ * 	 @author ${author}
+ *   @since ${date}
+ */
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@Api(value="#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end", description="${entity} 控制器")
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+#if(${superControllerClass})
+public class ${table.controllerName} {
+#else
+public class ${table.controllerName} {
+#end
+    private final Logger logger = LoggerFactory.getLogger(${table.controllerName}.class);
+
+    @Autowired
+    public ${table.serviceName} ${table.entityPath}Service;
+
+    /**
+     * @description : 获取分页列表
+     * ---------------------------------
+     * @author : ${author}
+     * @since : Create in ${date}
+     */
+    @PostMapping("/get${entity}List")
+    @ApiOperation(value="/get${entity}List", notes="获取分页列表")
+    @RequiresPermissions("business:${entity}:list")
+    public MessageVo list(@RequestParam Map<String, Object> params){
+        PageUtils page = ${table.entityPath}Service.queryPage(params);
+
+        return MessageVoUtil.success(page);
+    }
+
+
+    /**
+     * @description : 通过id获取${entity}
+     * ---------------------------------
+     * @author : ${author}
+     * @since : Create in ${date}
+     */
+    @RequestMapping("/get${entity}ById/{id}}")
+    @RequiresPermissions("business:${entity}:info")
+    public MessageVo info(@PathVariable("id") Long id){
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.getById(id);
+
+        HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+        stringObjectHashMap.put("${table.entityPath}", ${table.entityPath});
+        return MessageVoUtil.success(stringObjectHashMap);
+    }
+
+    /**
+     * @description : 添加${entity}
+     * ---------------------------------
+     * @author : ${author}
+     * @since : Create in ${date}
+     */
+    @PostMapping("/add${entity}")
+    @ApiOperation(value="/add${entity}", notes="添加${entity}")
+    @RequiresPermissions("business:${entity}:save")
+    public MessageVo save(@RequestBody ${entity} ${table.entityPath}){
+        ${table.entityPath}Service.save(${table.entityPath});
+
+        return MessageVoUtil.success();
+    }
+
+    /**
+     * @description : 通过id更新${entity}
+     * ---------------------------------
+     * @author : ${author}
+     * @since : Create in ${date}
+     */
+    @PostMapping("/update${entity}ById")
+    @ApiOperation(value="/update${entity}ById", notes="通过id更新${entity}")
+    @RequiresPermissions("business:${entity}:update")
+    public MessageVo update(@RequestBody ${entity} ${table.entityPath}){
+        ${table.entityPath}Service.updateById(${table.entityPath});
+
+        return MessageVoUtil.success();
+    }
+
+    /**
+     * @description : 通过id删除${entity}
+     * ---------------------------------
+     * @author : ${author}
+     * @since : Create in ${date}
+     */
+    @PostMapping("/delete")
+    @RequiresPermissions("business:${entity}:delete")
+    @ApiOperation(value="/delete${entity}ById", notes="通过id删除${entity}")
+    public MessageVo delete(@RequestBody Long[] ids){
+        ${table.entityPath}Service.removeByIds(Arrays.asList(ids));
+
+        return MessageVoUtil.success();
+    }
+
+}
