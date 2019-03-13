@@ -82,7 +82,7 @@ public class Generator {
         pc.setController("controller");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
-        pc.setEntity("bean");
+        pc.setEntity("entity");
         pc.setMapper("mapper");
         mpg.setPackageInfo(pc);
 
@@ -102,7 +102,7 @@ public class Generator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
-                return path + "/src/main/resources/mapper/" //+ "/mapper/"
+                return path + "/src/main/resources/mapper/" + "/business/"
                     + tableInfo.getEntityName() + "Mapper" + ".xml";//StringPool.DOT_XML;
             }
         });
