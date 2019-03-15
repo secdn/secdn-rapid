@@ -52,7 +52,7 @@ public class ${table.controllerName} {
     @PostMapping("/get${entity}List")
     @ApiOperation(value="/get${entity}List", notes="获取分页列表")
     @RequiresPermissions("business:${entity}:list")
-    public MessageVo list(@RequestParam Map<String, Object> params){
+    public MessageVo list(@RequestBody Map<String, Object> params){
         PageUtils page = ${table.entityPath}Service.queryPage(params);
 
         return MessageVoUtil.success(page);
