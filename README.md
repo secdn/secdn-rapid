@@ -1,6 +1,6 @@
 **项目介绍**
 
-secdnrapid是一个基于`Spring Boot`搭建的企业级快速开发脚手架。集成了`MyBatis-Plus`和`MyBatis-Plus AutoGenerator`，支持自动
+secdn-rapid是一个基于`Spring Boot`搭建的企业级快速开发脚手架。集成了`MyBatis-Plus`和`MyBatis-Plus AutoGenerator`，支持自动
 生成CURD接口所有相关代码；集成了`Shiro`，已经实现了按钮粒度级的权限控制，已经集成完整的用户体系代码。只需要专注于业务代码
 的开发，接私活的利器
 
