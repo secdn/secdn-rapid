@@ -68,3 +68,17 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
     call-setters-on-nulls: true
+
+#打印sql
+logging:
+  level:
+    io:
+      renren:
+        modules:
+          business:
+            mapper: debug
+          oss:
+            mapper: debug
+          sys:
+            mapper: debug
+  path: logs
