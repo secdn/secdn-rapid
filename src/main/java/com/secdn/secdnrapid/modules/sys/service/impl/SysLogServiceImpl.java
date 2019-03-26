@@ -4,7 +4,7 @@ package com.secdn.secdnrapid.modules.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.common.utils.Query;
 import com.secdn.secdnrapid.modules.sys.entity.SysLogEntity;
 import com.secdn.secdnrapid.modules.sys.mapper.SysLogMapper;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> implements SysLogService {
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
+    public PageInfo queryPage(Map<String, Object> params) {
         String key = (String)params.get("key");
 
         IPage<SysLogEntity> page = this.page(
@@ -27,6 +27,6 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLogEntity> i
             new QueryWrapper<SysLogEntity>().like(StringUtils.isNotBlank(key),"username", key)
         );
 
-        return new PageUtils(page);
+        return new PageInfo(page);
     }
 }

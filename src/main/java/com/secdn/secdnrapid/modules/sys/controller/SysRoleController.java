@@ -3,10 +3,10 @@ package com.secdn.secdnrapid.modules.sys.controller;
 
 import com.secdn.secdnrapid.common.annotation.SysLog;
 import com.secdn.secdnrapid.common.utils.Constant;
-import com.secdn.secdnrapid.common.utils.MessageVoUtil;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.common.validator.ValidatorUtils;
-import com.secdn.secdnrapid.common.vo.MessageVo;
+import com.secdn.secdnrapid.common.wrapper.WrapMapper;
+import com.secdn.secdnrapid.common.wrapper.Wrapper;
 import com.secdn.secdnrapid.modules.sys.entity.SysRoleEntity;
 import com.secdn.secdnrapid.modules.sys.service.SysRoleMenuService;
 import com.secdn.secdnrapid.modules.sys.service.SysRoleService;
@@ -35,15 +35,15 @@ public class SysRoleController extends AbstractController {
 	 */
 	@GetMapping("/list")
 	@RequiresPermissions("sys:role:list")
-	public MessageVo list(@RequestParam Map<String, Object> params){
+	public Wrapper<PageInfo> list(@RequestParam Map<String, Object> params){
 		//如果不是超级管理员，则只查询自己创建的角色列表
 		if(getUserId() != Constant.SUPER_ADMIN){
 			params.put("createUserId", getUserId());
 		}
 
-		PageUtils page = sysRoleService.queryPage(params);
+		PageInfo page = sysRoleService.queryPage(params);
 
-		return MessageVoUtil.success(page);
+		return WrapMapper.ok(page);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class SysRoleController extends AbstractController {
 	 */
 	@GetMapping("/select")
 	@RequiresPermissions("sys:role:select")
-	public MessageVo select(){
+	public Wrapper<HashMap<String, Object>> select(){
 		Map<String, Object> map = new HashMap<>();
 		
 		//如果不是超级管理员，则只查询自己所拥有的角色列表
@@ -62,7 +62,7 @@ public class SysRoleController extends AbstractController {
 
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("list", list);
-        return MessageVoUtil.success(stringObjectHashMap);
+        return WrapMapper.ok(stringObjectHashMap);
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class SysRoleController extends AbstractController {
 	 */
 	@GetMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")
-	public MessageVo info(@PathVariable("roleId") Long roleId){
+	public Wrapper<HashMap<String, Object>> info(@PathVariable("roleId") Long roleId){
 		SysRoleEntity role = sysRoleService.getById(roleId);
 		
 		//查询角色对应的菜单
@@ -79,7 +79,7 @@ public class SysRoleController extends AbstractController {
 
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("role", role);
-        return MessageVoUtil.success(stringObjectHashMap);
+        return WrapMapper.ok(stringObjectHashMap);
 	}
 	
 	/**
@@ -88,13 +88,13 @@ public class SysRoleController extends AbstractController {
 	@SysLog("保存角色")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:role:save")
-	public MessageVo save(@RequestBody SysRoleEntity role){
+	public Wrapper<Object> save(@RequestBody SysRoleEntity role){
 		ValidatorUtils.validateEntity(role);
 		
 		role.setCreateUserId(getUserId());
-		sysRoleService.save(role);
+		sysRoleService.saveRole(role);
 		
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 	/**
@@ -103,13 +103,13 @@ public class SysRoleController extends AbstractController {
 	@SysLog("修改角色")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:role:update")
-	public MessageVo update(@RequestBody SysRoleEntity role){
+	public Wrapper<Object> update(@RequestBody SysRoleEntity role){
 		ValidatorUtils.validateEntity(role);
 		
 		role.setCreateUserId(getUserId());
 		sysRoleService.update(role);
 		
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 	/**
@@ -118,9 +118,9 @@ public class SysRoleController extends AbstractController {
 	@SysLog("删除角色")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:role:delete")
-	public MessageVo delete(@RequestBody Long[] roleIds){
+	public Wrapper<Object> delete(@RequestBody Long[] roleIds){
 		sysRoleService.deleteBatch(roleIds);
 		
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 }

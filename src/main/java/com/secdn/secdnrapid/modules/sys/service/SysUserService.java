@@ -3,7 +3,7 @@ package com.secdn.secdnrapid.modules.sys.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.modules.sys.entity.SysUserEntity;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public interface SysUserService extends IService<SysUserEntity> {
 
-	PageUtils queryPage(Map<String, Object> params);
+	PageInfo queryPage(Map<String, Object> params);
 
 	/**
 	 * 查询用户的所有权限
@@ -36,7 +36,7 @@ public interface SysUserService extends IService<SysUserEntity> {
 	/**
 	 * 保存用户
 	 */
-	boolean save(SysUserEntity user);
+	boolean saveUser(SysUserEntity user);
 	
 	/**
 	 * 修改用户

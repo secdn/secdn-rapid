@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.secdn.secdnrapid.common.exception.SException;
 import com.secdn.secdnrapid.common.utils.Constant;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.common.utils.Query;
 import com.secdn.secdnrapid.modules.sys.entity.SysUserEntity;
 import com.secdn.secdnrapid.modules.sys.mapper.SysUserMapper;
@@ -42,7 +42,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 	private SysRoleService sysRoleService;
 
 	@Override
-	public PageUtils queryPage(Map<String, Object> params) {
+	public PageInfo queryPage(Map<String, Object> params) {
 		String username = (String)params.get("username");
 		Long createUserId = (Long)params.get("createUserId");
 
@@ -53,7 +53,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 				.eq(createUserId != null,"create_user_id", createUserId)
 		);
 
-		return new PageUtils(page);
+		return new PageInfo(page);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
 
 	@Override
 	@Transactional
-	public boolean save(SysUserEntity user) {
+	public boolean saveUser(SysUserEntity user) {
 		user.setCreateTime(new Date());
 		//sha256加密
 		String salt = RandomStringUtils.randomAlphanumeric(20);

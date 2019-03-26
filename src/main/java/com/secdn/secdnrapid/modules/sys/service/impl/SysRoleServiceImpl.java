@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.secdn.secdnrapid.common.exception.SException;
 import com.secdn.secdnrapid.common.utils.Constant;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.common.utils.Query;
 import com.secdn.secdnrapid.modules.sys.entity.SysRoleEntity;
 import com.secdn.secdnrapid.modules.sys.mapper.SysRoleMapper;
@@ -14,7 +14,6 @@ import com.secdn.secdnrapid.modules.sys.mapper.SysUserMapper;
 import com.secdn.secdnrapid.modules.sys.service.SysRoleMenuService;
 import com.secdn.secdnrapid.modules.sys.service.SysRoleService;
 import com.secdn.secdnrapid.modules.sys.service.SysUserRoleService;
-import com.secdn.secdnrapid.modules.sys.service.SysUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     private SysUserRoleService sysUserRoleService;
 
 	@Override
-	public PageUtils queryPage(Map<String, Object> params) {
+	public PageInfo queryPage(Map<String, Object> params) {
 		String roleName = (String)params.get("roleName");
 		Long createUserId = (Long)params.get("createUserId");
 
@@ -50,12 +49,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
 				.eq(createUserId != null,"create_user_id", createUserId)
 		);
 
-		return new PageUtils(page);
+		return new PageInfo(page);
 	}
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean save(SysRoleEntity role) {
+    public boolean saveRole(SysRoleEntity role) {
         role.setCreateTime(new Date());
         this.saveOrUpdate(role);
 

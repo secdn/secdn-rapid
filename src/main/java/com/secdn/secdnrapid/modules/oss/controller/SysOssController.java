@@ -5,13 +5,13 @@ import com.google.gson.Gson;
 import com.secdn.secdnrapid.common.exception.SException;
 import com.secdn.secdnrapid.common.utils.ConfigConstant;
 import com.secdn.secdnrapid.common.utils.Constant;
-import com.secdn.secdnrapid.common.utils.MessageVoUtil;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.common.validator.ValidatorUtils;
 import com.secdn.secdnrapid.common.validator.group.AliyunGroup;
 import com.secdn.secdnrapid.common.validator.group.QcloudGroup;
 import com.secdn.secdnrapid.common.validator.group.QiniuGroup;
-import com.secdn.secdnrapid.common.vo.MessageVo;
+import com.secdn.secdnrapid.common.wrapper.WrapMapper;
+import com.secdn.secdnrapid.common.wrapper.Wrapper;
 import com.secdn.secdnrapid.modules.oss.cloud.CloudStorageConfig;
 import com.secdn.secdnrapid.modules.oss.cloud.OSSFactory;
 import com.secdn.secdnrapid.modules.oss.entity.SysOssEntity;
@@ -49,10 +49,10 @@ public class SysOssController {
 	 */
 	@GetMapping("/list")
 	@RequiresPermissions("sys:oss:all")
-	public MessageVo list(@RequestParam Map<String, Object> params){
-		PageUtils page = sysOssService.queryPage(params);
+	public Wrapper<PageInfo> list(@RequestParam Map<String, Object> params){
+		PageInfo page = sysOssService.queryPage(params);
 
-		return MessageVoUtil.success(page);
+		return WrapMapper.ok(page);
 	}
 
 
@@ -61,12 +61,12 @@ public class SysOssController {
      */
     @GetMapping("/config")
     @RequiresPermissions("sys:oss:all")
-    public MessageVo config(){
+    public Wrapper<HashMap<String, Object>> config(){
         CloudStorageConfig config = sysConfigService.getConfigObject(KEY, CloudStorageConfig.class);
 
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("config", config);
-        return MessageVoUtil.success(stringObjectHashMap);
+        return WrapMapper.ok(stringObjectHashMap);
     }
 
 
@@ -75,7 +75,7 @@ public class SysOssController {
 	 */
 	@PostMapping("/saveConfig")
 	@RequiresPermissions("sys:oss:all")
-	public MessageVo saveConfig(@RequestBody CloudStorageConfig config){
+	public Wrapper<Object> saveConfig(@RequestBody CloudStorageConfig config){
 		//校验类型
 		ValidatorUtils.validateEntity(config);
 
@@ -92,7 +92,7 @@ public class SysOssController {
 
         sysConfigService.updateValueByKey(KEY, new Gson().toJson(config));
 
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 
@@ -101,7 +101,7 @@ public class SysOssController {
 	 */
 	@PostMapping("/upload")
 	@RequiresPermissions("sys:oss:all")
-	public MessageVo upload(@RequestParam("file") MultipartFile file) throws Exception {
+	public Wrapper<HashMap<String, Object>> upload(@RequestParam("file") MultipartFile file) throws Exception {
 		if (file.isEmpty()) {
 			throw new SException("上传文件不能为空");
 		}
@@ -118,7 +118,7 @@ public class SysOssController {
 
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("url", url);
-        return MessageVoUtil.success(stringObjectHashMap);
+        return WrapMapper.ok(stringObjectHashMap);
 	}
 
 
@@ -127,10 +127,10 @@ public class SysOssController {
 	 */
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:oss:all")
-	public MessageVo delete(@RequestBody Long[] ids){
+	public Wrapper<Object> delete(@RequestBody Long[] ids){
 		sysOssService.removeByIds(Arrays.asList(ids));
 
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 
 }

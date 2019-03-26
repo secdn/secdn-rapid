@@ -3,8 +3,8 @@ package com.secdn.secdnrapid.modules.sys.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.secdn.secdnrapid.common.utils.MessageVoUtil;
-import com.secdn.secdnrapid.common.vo.MessageVo;
+import com.secdn.secdnrapid.common.wrapper.WrapMapper;
+import com.secdn.secdnrapid.common.wrapper.Wrapper;
 import com.secdn.secdnrapid.modules.sys.entity.SysUserTokenEntity;
 import com.secdn.secdnrapid.modules.sys.mapper.SysUserTokenMapper;
 import com.secdn.secdnrapid.modules.sys.oauth2.TokenGenerator;
@@ -21,7 +21,7 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenMapper, Sys
 
 
 	@Override
-	public MessageVo createToken(long userId) {
+	public Wrapper<JSONObject> createToken(long userId) {
 		//生成一个token
 		String token = TokenGenerator.generateValue();
 
@@ -52,7 +52,7 @@ public class SysUserTokenServiceImpl extends ServiceImpl<SysUserTokenMapper, Sys
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("token", token);
 		jsonObject.put("expire", EXPIRE);
-		return MessageVoUtil.success(jsonObject);
+		return WrapMapper.ok(jsonObject);
 	}
 
 	@Override

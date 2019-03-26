@@ -5,8 +5,8 @@ package com.secdn.secdnrapid.modules.sys.controller;
 import com.secdn.secdnrapid.common.annotation.SysLog;
 import com.secdn.secdnrapid.common.exception.SException;
 import com.secdn.secdnrapid.common.utils.Constant;
-import com.secdn.secdnrapid.common.utils.MessageVoUtil;
-import com.secdn.secdnrapid.common.vo.MessageVo;
+import com.secdn.secdnrapid.common.wrapper.WrapMapper;
+import com.secdn.secdnrapid.common.wrapper.Wrapper;
 import com.secdn.secdnrapid.modules.sys.entity.SysMenuEntity;
 import com.secdn.secdnrapid.modules.sys.service.ShiroService;
 import com.secdn.secdnrapid.modules.sys.service.SysMenuService;
@@ -39,13 +39,13 @@ public class SysMenuController extends AbstractController {
 	 * 导航菜单
 	 */
 	@GetMapping("/nav")
-	public MessageVo nav(){
+	public Wrapper<HashMap<String, Object>> nav(){
 		List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
 		Set<String> permissions = shiroService.getUserPermissions(getUserId());
 		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
 		stringObjectHashMap.put("menuList", menuList);
 		stringObjectHashMap.put("permissions", permissions);
-		return MessageVoUtil.success(stringObjectHashMap);
+		return WrapMapper.ok(stringObjectHashMap);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@GetMapping("/list")
 	@RequiresPermissions("sys:menu:list")
-	public MessageVo list(){
+	public Wrapper<List<SysMenuEntity>> list(){
 		List<SysMenuEntity> menuList = sysMenuService.list(null);
 		for(SysMenuEntity sysMenuEntity : menuList){
 			SysMenuEntity parentMenuEntity = sysMenuService.getById(sysMenuEntity.getParentId());
@@ -62,7 +62,7 @@ public class SysMenuController extends AbstractController {
 			}
 		}
 
-		return MessageVoUtil.success(menuList);
+		return WrapMapper.ok(menuList);
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@GetMapping("/select")
 	@RequiresPermissions("sys:menu:select")
-	public MessageVo select(){
+	public Wrapper<HashMap<String, Object>> select(){
 		//查询列表数据
 		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
 		
@@ -84,7 +84,7 @@ public class SysMenuController extends AbstractController {
 
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("menuList", menuList);
-        return MessageVoUtil.success(stringObjectHashMap);
+        return WrapMapper.ok(stringObjectHashMap);
 	}
 	
 	/**
@@ -92,11 +92,11 @@ public class SysMenuController extends AbstractController {
 	 */
 	@GetMapping("/info/{menuId}")
 	@RequiresPermissions("sys:menu:info")
-	public MessageVo info(@PathVariable("menuId") Long menuId){
+	public Wrapper<HashMap<String, Object>> info(@PathVariable("menuId") Long menuId){
 		SysMenuEntity menu = sysMenuService.getById(menuId);
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
         stringObjectHashMap.put("menu", menu);
-        return MessageVoUtil.success(stringObjectHashMap);
+        return WrapMapper.ok(stringObjectHashMap);
 	}
 	
 	/**
@@ -105,13 +105,13 @@ public class SysMenuController extends AbstractController {
 	@SysLog("保存菜单")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:menu:save")
-	public MessageVo save(@RequestBody SysMenuEntity menu){
+	public Wrapper<Object> save(@RequestBody SysMenuEntity menu){
 		//数据校验
 		verifyForm(menu);
 		
 		sysMenuService.save(menu);
 		
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 	/**
@@ -120,13 +120,13 @@ public class SysMenuController extends AbstractController {
 	@SysLog("修改菜单")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:menu:update")
-	public MessageVo update(@RequestBody SysMenuEntity menu){
+	public Wrapper<Object> update(@RequestBody SysMenuEntity menu){
 		//数据校验
 		verifyForm(menu);
 				
 		sysMenuService.updateById(menu);
 		
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 	/**
@@ -135,20 +135,20 @@ public class SysMenuController extends AbstractController {
 	@SysLog("删除菜单")
 	@PostMapping("/delete/{menuId}")
 	@RequiresPermissions("sys:menu:delete")
-	public MessageVo delete(@PathVariable("menuId") long menuId){
+	public Wrapper<Object> delete(@PathVariable("menuId") long menuId){
 		if(menuId <= 31){
-			return MessageVoUtil.fail("系统菜单，不能删除");
+			return WrapMapper.error("系统菜单，不能删除");
 		}
 
 		//判断是否有子菜单或按钮
 		List<SysMenuEntity> menuList = sysMenuService.queryListParentId(menuId);
 		if(menuList.size() > 0){
-			return MessageVoUtil.fail("请先删除子菜单或按钮");
+			return WrapMapper.error("请先删除子菜单或按钮");
 		}
 
 		sysMenuService.delete(menuId);
 
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 	/**

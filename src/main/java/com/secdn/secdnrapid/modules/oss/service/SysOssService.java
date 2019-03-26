@@ -6,7 +6,7 @@ package com.secdn.secdnrapid.modules.oss.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.modules.oss.entity.SysOssEntity;
 
 import java.util.Map;
@@ -20,5 +20,5 @@ import java.util.Map;
  */
 public interface SysOssService extends IService<SysOssEntity> {
 
-	PageUtils queryPage(Map<String, Object> params);
+	PageInfo queryPage(Map<String, Object> params);
 }

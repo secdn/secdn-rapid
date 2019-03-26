@@ -4,11 +4,10 @@ package com.secdn.secdnrapid.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
 import com.secdn.secdnrapid.common.exception.SException;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.common.utils.Query;
 import com.secdn.secdnrapid.modules.sys.entity.SysConfigEntity;
 import com.secdn.secdnrapid.modules.sys.mapper.SysConfigMapper;
@@ -29,7 +28,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 	private SysConfigRedis sysConfigRedis;
 
 	@Override
-	public PageUtils queryPage(Map<String, Object> params) {
+	public PageInfo queryPage(Map<String, Object> params) {
 		String paramKey = (String)params.get("paramKey");
 
 		IPage<SysConfigEntity> page = this.page(
@@ -39,11 +38,11 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 					.eq("status", 1)
 		);
 
-		return new PageUtils(page);
+		return new PageInfo(page);
 	}
 	
 	@Override
-	public boolean save(SysConfigEntity config) {
+	public boolean saveConfig(SysConfigEntity config) {
 		boolean isSuccess = this.saveOrUpdate(config);
 		if(isSuccess) {
             sysConfigRedis.saveOrUpdate(config);

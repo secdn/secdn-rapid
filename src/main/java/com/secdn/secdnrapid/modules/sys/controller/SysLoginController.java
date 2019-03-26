@@ -1,7 +1,8 @@
 package com.secdn.secdnrapid.modules.sys.controller;
 
-import com.secdn.secdnrapid.common.utils.MessageVoUtil;
-import com.secdn.secdnrapid.common.vo.MessageVo;
+import com.alibaba.fastjson.JSONObject;
+import com.secdn.secdnrapid.common.wrapper.WrapMapper;
+import com.secdn.secdnrapid.common.wrapper.Wrapper;
 import com.secdn.secdnrapid.modules.sys.entity.SysUserEntity;
 import com.secdn.secdnrapid.modules.sys.form.SysLoginForm;
 import com.secdn.secdnrapid.modules.sys.service.SysCaptchaService;
@@ -21,7 +22,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * 登录相关
@@ -56,10 +56,10 @@ public class SysLoginController extends AbstractController {
 	 * 登录
 	 */
 	@PostMapping("/sys/login")
-	public MessageVo login(@RequestBody SysLoginForm form)throws IOException {
+	public Wrapper<JSONObject> login(@RequestBody SysLoginForm form)throws IOException {
 		boolean captcha = sysCaptchaService.validate(form.getUuid(), form.getCaptcha());
 		if(!captcha){
-			return MessageVoUtil.fail("验证码不正确");
+			return WrapMapper.error("验证码不正确");
 		}
 
 		//用户信息
@@ -67,12 +67,12 @@ public class SysLoginController extends AbstractController {
 
 		//账号不存在、密码错误
 		if(user == null || !user.getPassword().equals(new Sha256Hash(form.getPassword(), user.getSalt()).toHex())) {
-			return MessageVoUtil.fail("账号或密码不正确");
+			return WrapMapper.error("账号或密码不正确");
 		}
 
 		//账号锁定
 		if(user.getStatus() == 0){
-			return MessageVoUtil.fail("账号已被锁定,请联系管理员");
+			return WrapMapper.error("账号已被锁定,请联系管理员");
 		}
 
 		//生成token，并保存到数据库
@@ -84,9 +84,9 @@ public class SysLoginController extends AbstractController {
 	 * 退出
 	 */
 	@PostMapping("/sys/logout")
-	public MessageVo logout() {
+	public Wrapper<Object> logout() {
 		sysUserTokenService.logout(getUserId());
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 }

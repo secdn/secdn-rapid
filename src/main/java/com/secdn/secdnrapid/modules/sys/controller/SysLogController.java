@@ -2,9 +2,9 @@
 
 package com.secdn.secdnrapid.modules.sys.controller;
 
-import com.secdn.secdnrapid.common.utils.MessageVoUtil;
-import com.secdn.secdnrapid.common.utils.PageUtils;
-import com.secdn.secdnrapid.common.vo.MessageVo;
+import com.secdn.secdnrapid.common.utils.PageInfo;
+import com.secdn.secdnrapid.common.wrapper.WrapMapper;
+import com.secdn.secdnrapid.common.wrapper.Wrapper;
 import com.secdn.secdnrapid.modules.sys.service.SysLogService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +33,10 @@ public class SysLogController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("sys:log:list")
-	public MessageVo list(@RequestParam Map<String, Object> params){
-		PageUtils page = sysLogService.queryPage(params);
+	public Wrapper<PageInfo> list(@RequestParam Map<String, Object> params){
+		PageInfo page = sysLogService.queryPage(params);
 
-		return MessageVoUtil.success(page);
+		return WrapMapper.ok(page);
 	}
 	
 }

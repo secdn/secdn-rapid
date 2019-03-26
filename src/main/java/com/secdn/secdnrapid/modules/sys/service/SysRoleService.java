@@ -4,7 +4,7 @@ package com.secdn.secdnrapid.modules.sys.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.modules.sys.entity.SysRoleEntity;
 
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public interface SysRoleService extends IService<SysRoleEntity> {
 
-	PageUtils queryPage(Map<String, Object> params);
+	PageInfo queryPage(Map<String, Object> params);
 
-	boolean save(SysRoleEntity role);
+	boolean saveRole(SysRoleEntity role);
 
 	void update(SysRoleEntity role);
 

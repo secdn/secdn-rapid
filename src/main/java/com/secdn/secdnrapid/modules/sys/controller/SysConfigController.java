@@ -4,10 +4,10 @@ package com.secdn.secdnrapid.modules.sys.controller;
 
 
 import com.secdn.secdnrapid.common.annotation.SysLog;
-import com.secdn.secdnrapid.common.utils.MessageVoUtil;
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.common.validator.ValidatorUtils;
-import com.secdn.secdnrapid.common.vo.MessageVo;
+import com.secdn.secdnrapid.common.wrapper.WrapMapper;
+import com.secdn.secdnrapid.common.wrapper.Wrapper;
 import com.secdn.secdnrapid.modules.sys.entity.SysConfigEntity;
 import com.secdn.secdnrapid.modules.sys.service.SysConfigService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +34,10 @@ public class SysConfigController extends AbstractController {
 	@GetMapping("/list")
     @PostMapping
 	@RequiresPermissions("sys:config:list")
-	public MessageVo list(@RequestParam Map<String, Object> params){
-		PageUtils page = sysConfigService.queryPage(params);
+	public Wrapper<PageInfo> list(@RequestParam Map<String, Object> params){
+		PageInfo page = sysConfigService.queryPage(params);
 
-		return MessageVoUtil.success(page);
+		return WrapMapper.ok(page);
 	}
 	
 	
@@ -46,10 +46,10 @@ public class SysConfigController extends AbstractController {
 	 */
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
-	public MessageVo info(@PathVariable("id") Long id){
+	public Wrapper<SysConfigEntity> info(@PathVariable("id") Long id){
 		SysConfigEntity config = sysConfigService.getById(id);
 		
-		return MessageVoUtil.success(config);
+		return WrapMapper.ok(config);
 	}
 	
 	/**
@@ -58,12 +58,12 @@ public class SysConfigController extends AbstractController {
 	@SysLog("保存配置")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:config:save")
-	public MessageVo save(@RequestBody SysConfigEntity config){
+	public Wrapper<Object> save(@RequestBody SysConfigEntity config){
 		ValidatorUtils.validateEntity(config);
 
-		sysConfigService.save(config);
+		sysConfigService.saveConfig(config);
 		
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 	/**
@@ -72,12 +72,12 @@ public class SysConfigController extends AbstractController {
 	@SysLog("修改配置")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:config:update")
-	public MessageVo update(@RequestBody SysConfigEntity config){
+	public Wrapper<Object> update(@RequestBody SysConfigEntity config){
 		ValidatorUtils.validateEntity(config);
 		
 		sysConfigService.update(config);
 		
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 	
 	/**
@@ -86,10 +86,10 @@ public class SysConfigController extends AbstractController {
 	@SysLog("删除配置")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
-	public MessageVo delete(@RequestBody Long[] ids){
+	public Wrapper<Object> delete(@RequestBody Long[] ids){
 		sysConfigService.deleteBatch(ids);
 		
-		return MessageVoUtil.success();
+		return WrapMapper.ok();
 	}
 
 }
