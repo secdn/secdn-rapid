@@ -1,10 +1,9 @@
 package ${package.Service};
 
-import com.secdn.secdnrapid.common.utils.PageUtils;
+import com.secdn.secdnrapid.common.utils.PageInfo;
+import com.secdn.secdnrapid.modules.business.dto.${entity}Dto;
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
-
-import java.util.Map;
 
 /**
  *   @description : ${entity} 服务接口
@@ -14,6 +13,6 @@ import java.util.Map;
  */
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageInfo queryPage(${entity}Dto params);
 }
 

@@ -32,32 +32,32 @@
 #foreach($field in ${table.commonFields})
             #if(${field.name} == ${field.propertyName})${field.name}#else${field.name} AS ${field.propertyName}#end,
 #end
-        ${table.fieldNames}
-    </sql>
+            ${table.fieldNames}
+        </sql>
 
     #end
-    <select id="selectPageWithParam" resultType="${package.Entity}.${entity}" parameterType="${package.Entity}.${entity}">
-        select
-        #if(${baseColumnList})
-            <include refid="Base_Column_List"/>
-        #end
-        #if(!${baseColumnList})
-            *
-        #end
-        from ${table.name}
-    </select>
-
-    <select id="selectOneByObj" resultType="${package.Entity}.${entity}" parameterType="java.lang.Long">
-        select
-        #if(${baseColumnList})
-            <include refid="Base_Column_List"/>
-        #end
-        #if(!${baseColumnList})
-            *
-        #end
-        from ${table.name}
-        <where>
-            id = #{id, jdbcType=VARCHAR}
-        </where>
-    </select>
+##    <select id="selectPageWithParam" resultType="${package.Entity}.${entity}" parameterType="${package.Entity}.${entity}">
+##        select
+##        #if(${baseColumnList})
+##            <include refid="Base_Column_List"/>
+##        #end
+##        #if(!${baseColumnList})
+##            *
+##        #end
+##        from ${table.name}
+##    </select>
+##
+##    <select id="selectOneByObj" resultType="${package.Entity}.${entity}" parameterType="java.lang.Long">
+##        select
+##        #if(${baseColumnList})
+##            <include refid="Base_Column_List"/>
+##        #end
+##        #if(!${baseColumnList})
+##            *
+##        #end
+##        from ${table.name}
+##        <where>
+##            id = #{id, jdbcType=VARCHAR}
+##        </where>
+##    </select>
 </mapper>

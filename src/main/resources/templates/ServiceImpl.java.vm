@@ -1,16 +1,15 @@
 package ${package.ServiceImpl};
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.secdn.secdnrapid.common.utils.PageUtils;
-import com.secdn.secdnrapid.common.utils.Query;
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.secdn.secdnrapid.common.utils.Query;
+import com.secdn.secdnrapid.common.utils.PageInfo;
+import com.secdn.secdnrapid.modules.business.dto.${entity}Dto;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 /**
  *   @description : ${entity} 服务实现类
@@ -22,13 +21,13 @@ import java.util.Map;
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
+    public PageInfo queryPage(${entity}Dto params) {
         IPage<${entity}> page = this.page(
                 new Query<${entity}>(params).getPage(),
                 new QueryWrapper<${entity}>()
         );
 
-        return new PageUtils(page);
+        return new PageInfo(page);
     }
 
 }
