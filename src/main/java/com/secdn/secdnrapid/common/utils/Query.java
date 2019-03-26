@@ -4,9 +4,11 @@ package com.secdn.secdnrapid.common.utils;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secdn.secdnrapid.common.xss.SQLFilter;
 import org.apache.commons.lang.StringUtils;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,15 +31,23 @@ public class Query<T> extends LinkedHashMap<String, Object> {
      */
     private long pageSize = 10;
 
-    public Query(Map<String, Object> params){
-        this.putAll(params);
+    public Query(Object params){
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String,Object> pageParams = null;
+        try {
+            pageParams = objectMapper.readValue(objectMapper.writeValueAsString(params), Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Map<String,Object> pageParams = JSONObject.toJavaObject(JSON.parseObject(JSON.toJSONString(params)), Map.class);
+        this.putAll(pageParams);
 
         //分页参数
-        if(params.get("pageNumber") != null){
-            pageNumber = Long.getLong((String)params.get("pageNumber"));
+        if(pageParams.get("pageNumber") != null){
+            pageNumber = Long.parseLong("" + pageParams.get("pageNumber"));
         }
-        if(params.get("pageSize") != null){
-            pageSize = Long.getLong((String)params.get("pageSize"));
+        if(pageParams.get("pageSize") != null){
+            pageSize = Long.parseLong("" + pageParams.get("pageSize"));
         }
 
         this.put("offset", (pageNumber - 1) * pageSize);
@@ -45,8 +55,8 @@ public class Query<T> extends LinkedHashMap<String, Object> {
         this.put("pageSize", pageSize);
 
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
-        String orderByField = SQLFilter.sqlInject((String)params.get("orderByField"));
-        String order = SQLFilter.sqlInject((String)params.get("order"));
+        String orderByField = SQLFilter.sqlInject((String)pageParams.get("orderByField"));
+        String order = SQLFilter.sqlInject((String)pageParams.get("order"));
         this.put("orderByField", orderByField);
         this.put("order", order);
 
