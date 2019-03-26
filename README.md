@@ -59,8 +59,9 @@ secdn-secdnrapid
 
 **生成代码**
 - 建表
-- 修改`mybatis-plus.properties`下的账户和密码，更新tableName,输入需要生成代码的表名
-- 修改`mybatis-plus.properties`下的`parent`值
+- 根据表名在`*.modules.business.dto`包下创建Dto类，根据需要生成的表名来确定Dto类名(例：表`biz_article`建立的类为`BizArticleDto`)
+- 修改`mybatis-plus.properties`下的账户和密码，更新tableName,输入需要生成代码的表名(例：`biz_article,biz_type`，多个表用`,`分隔)
+- 修改`mybatis-plus.properties`下的`parent`值(最好不要改)
 - 运行`generator/Generator.java`即可在对应目录下生成业务代码
 
 <br> 
