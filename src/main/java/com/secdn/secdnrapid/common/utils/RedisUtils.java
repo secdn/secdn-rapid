@@ -1,10 +1,13 @@
 package com.secdn.secdnrapid.common.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,7 +32,7 @@ public class RedisUtils {
     public final static long DEFAULT_EXPIRE = 60 * 60 * 24;
     /**  不设置过期时长 */
     public final static long NOT_EXPIRE = -1;
-    private final static Gson gson = new Gson();
+    private final static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
     public void set(String key, Object value, long expire){
         valueOperations.set(key, toJson(value));
@@ -68,6 +71,13 @@ public class RedisUtils {
 
     public void delete(String key) {
         redisTemplate.delete(key);
+    }
+
+    public void dimDelete(String dimKey) {
+        Set<String> keys = redisTemplate.keys(dimKey);
+        if (CollectionUtils.isNotEmpty(keys)) {
+            redisTemplate.delete(keys);
+        }
     }
 
     /**
