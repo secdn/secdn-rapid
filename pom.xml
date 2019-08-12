@@ -20,7 +20,7 @@
         <java.version>1.8</java.version>
 
         <shiro.version>1.4.0</shiro.version>
-        <jjwt.version>0.9.1</jjwt.version>
+        <jjwt.version>0.10.7</jjwt.version>
         <mybatisplus.spring.boot.version>3.1.0</mybatisplus.spring.boot.version>
         <mysql.version>5.1.38</mysql.version>
         <mssql.version>4.0</mssql.version>
@@ -192,8 +192,20 @@
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
+            <artifactId>jjwt-api</artifactId>
             <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
