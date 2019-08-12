@@ -1,7 +1,6 @@
 package com.secdn.secdnrapid.modules.sys.oauth2;
 
 import com.google.gson.Gson;
-
 import com.secdn.secdnrapid.common.utils.HttpContextUtils;
 import com.secdn.secdnrapid.common.wrapper.WrapMapper;
 import org.apache.commons.lang.StringUtils;
@@ -17,84 +16,86 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * oauth2过滤器
- *
- */
+/** oauth2过滤器 */
 public class OAuth2Filter extends AuthenticatingFilter {
 
-    @Override
-    protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
-        //获取请求token
-        String token = getRequestToken((HttpServletRequest) request);
+  @Override
+  protected AuthenticationToken createToken(ServletRequest request, ServletResponse response)
+      throws Exception {
+    // 获取请求token
+    String token = getRequestToken((HttpServletRequest) request);
 
-        if(StringUtils.isBlank(token)){
-            return null;
-        }
-
-        return new OAuth2Token(token);
+    if (StringUtils.isBlank(token)) {
+      return null;
     }
 
-    @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if(((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())){
-            return true;
-        }
+    return new OAuth2Token(token);
+  }
 
-        return false;
+  @Override
+  protected boolean isAccessAllowed(
+      ServletRequest request, ServletResponse response, Object mappedValue) {
+    if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
+      return true;
     }
 
-    @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        //获取请求token，如果token不存在，直接返回401
-        String token = getRequestToken((HttpServletRequest) request);
-        if(StringUtils.isBlank(token)){
-            HttpServletResponse httpResponse = (HttpServletResponse) response;
-            httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-            httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
+    return false;
+  }
 
-            String json = new Gson().toJson(WrapMapper.error(HttpStatus.SC_UNAUTHORIZED, "invalid token"));
+  @Override
+  protected boolean onAccessDenied(ServletRequest request, ServletResponse response)
+      throws Exception {
+    // 获取请求token，如果token不存在，直接返回401
+    String token = getRequestToken((HttpServletRequest) request);
+    if (StringUtils.isBlank(token)) {
+      HttpServletResponse httpResponse = (HttpServletResponse) response;
+      httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+      httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
 
-            httpResponse.getWriter().print(json);
+      String json =
+          new Gson().toJson(WrapMapper.error(HttpStatus.SC_UNAUTHORIZED, "invalid token"));
 
-            return false;
-        }
+      httpResponse.getWriter().print(json);
 
-        return executeLogin(request, response);
+      return false;
     }
 
-    @Override
-    protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        httpResponse.setContentType("application/json;charset=utf-8");
-        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
-        httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
-        try {
-            //处理登录失败的异常
-            Throwable throwable = e.getCause() == null ? e : e.getCause();
-            String json = new Gson().toJson(WrapMapper.error(HttpStatus.SC_UNAUTHORIZED, throwable.getMessage()));
-            httpResponse.getWriter().print(json);
-        } catch (IOException e1) {
+    return executeLogin(request, response);
+  }
 
-        }
+  @Override
+  protected boolean onLoginFailure(
+      AuthenticationToken token,
+      AuthenticationException e,
+      ServletRequest request,
+      ServletResponse response) {
+    HttpServletResponse httpResponse = (HttpServletResponse) response;
+    httpResponse.setContentType("application/json;charset=utf-8");
+    httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+    httpResponse.setHeader("Access-Control-Allow-Origin", HttpContextUtils.getOrigin());
+    try {
+      // 处理登录失败的异常
+      Throwable throwable = e.getCause() == null ? e : e.getCause();
+      String json =
+          new Gson().toJson(WrapMapper.error(HttpStatus.SC_UNAUTHORIZED, throwable.getMessage()));
+      httpResponse.getWriter().print(json);
+    } catch (IOException e1) {
 
-        return false;
     }
 
-    /**
-     * 获取请求的token
-     */
-    private String getRequestToken(HttpServletRequest httpRequest){
-        //从header中获取token
-        String token = httpRequest.getHeader("token");
+    return false;
+  }
 
-        //如果header中不存在token，则从参数中获取token
-        if(StringUtils.isBlank(token)){
-            token = httpRequest.getParameter("token");
-        }
+  /** 获取请求的token */
+  private String getRequestToken(HttpServletRequest httpRequest) {
+    // 从header中获取token
+    String token = httpRequest.getHeader("Authorization").replace("Bearer ", "");
 
-        return token;
+    // 如果header中不存在token，则从参数中获取token
+    if (StringUtils.isBlank(token)) {
+      token = httpRequest.getParameter("Authorization").replace("Bearer ", "");
     }
 
-
+    return token;
+  }
 }

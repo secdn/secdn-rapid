@@ -1,26 +1,29 @@
 package com.secdn.secdnrapid.modules.sys.service;
 
-
-
 import com.secdn.secdnrapid.modules.sys.entity.SysUserEntity;
 import com.secdn.secdnrapid.modules.sys.entity.SysUserTokenEntity;
 
 import java.util.Set;
 
-/**
- * shiro相关接口
- */
+/** shiro相关接口 */
 public interface ShiroService {
-    /**
-     * 获取用户权限列表
-     */
-    Set<String> getUserPermissions(long userId);
+  /** 获取用户权限列表 */
+  Set<String> getUserPermissions(long userId);
 
-    SysUserTokenEntity queryByToken(String token);
+  SysUserTokenEntity queryByToken(String token);
 
-    /**
-     * 根据用户ID，查询用户
-     * @param userId
-     */
-    SysUserEntity queryUser(Long userId);
+  /**
+   * 根据用户ID，查询用户
+   *
+   * @param userId
+   */
+  SysUserEntity queryUser(Long userId);
+
+  /**
+   * 根据用户名,查询用户
+   *
+   * @param userName
+   * @return
+   */
+  SysUserEntity queryUserByUserName(String userName);
 }
