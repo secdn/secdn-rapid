@@ -236,9 +236,11 @@
                     <!--<url>scp://oss:oss@10.5.189.2/home/oss/openbbs/</url>-->
                     <commands>
                         <!-- Kill Old Process -->
-                        <command>kill -9 `ps -ef |grep ${project.artifactId}.jar|grep -v "grep" |awk '{print $2}'`</command>
+                        <command>kill -9 `ps -ef |grep ${project.artifactId}.jar|grep -v "grep" |awk '{print $2}'`
+                        </command>
                         <!-- Restart jar package，write result into secdn.log -->
-                        <command><![CDATA[nohup java -jar ${service-path}/${pack-name} --spring.profiles.active=test > ${service-path}/secdn.log 2>&1 & ]]></command>
+                        <command>
+                            <![CDATA[nohup java -jar ${service-path}/${pack-name} --spring.profiles.active=test > ${service-path}/secdn.log 2>&1 & ]]></command>
                         <command><![CDATA[netstat -nptl]]></command>
                         <command><![CDATA[ps -ef | grep java | grep -v grep]]></command>
                     </commands>
