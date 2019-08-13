@@ -1,7 +1,5 @@
 package com.secdn.secdnrapid.common.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.secdn.secdnrapid.modules.sys.entity.SysUserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -15,7 +13,6 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.Serializable;
 import java.security.Key;
 import java.util.Date;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -43,9 +40,7 @@ public class JwtTokenUtil implements Serializable {
   // ,和过期时间，去Redis 里面看看是否为黑名单Token，当修改密码，登出时，将原来的Token存进Redis里面，形成一个黑名单，这样子Token就失效了
 
   /** 签发JWT 自定义失效时间 */
-  public String generateToken(SysUserEntity user, long ttlMillis) {
-    // 自定义属性存入Token中
-    Map<String, Object> claims = JSON.parseObject(JSON.toJSONString(user), Map.class);
+  public String generateToken(String userName, long ttlMillis) {
     long nowMillis = System.currentTimeMillis();
     // 设置签名算法
     SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
@@ -56,9 +51,8 @@ public class JwtTokenUtil implements Serializable {
     // setClaims()为设置私有声明，如果有私有声明，一定要先设置这个自己创建的私有的声明，这个是给builder的claim赋值，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明的
     JwtBuilder builder =
         Jwts.builder()
-            .setClaims(claims)
             .setIssuer("secdn")
-            .setSubject(user.getUsername())
+            .setSubject(userName)
             .setAudience("client")
             .setId(UUID.randomUUID().toString())
             .setIssuedAt(new Date())

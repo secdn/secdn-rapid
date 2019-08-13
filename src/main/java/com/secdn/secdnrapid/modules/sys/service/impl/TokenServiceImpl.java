@@ -28,7 +28,7 @@ public class TokenServiceImpl implements TokenService {
 
   @Override
   public Wrapper<JSONObject> createToken(SysUserEntity user) {
-    String token = jwtTokenUtil.generateToken(user, EXPIRATION_TIME);
+    String token = jwtTokenUtil.generateToken(user.getUsername(), EXPIRATION_TIME);
     token = "Bearer " + token;
     redisUtils.delete(REDIS_EXPIRED_TOKEN_KEY + user.getUsername());
     JSONObject jsonObject = new JSONObject();
