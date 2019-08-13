@@ -29,15 +29,9 @@ public class JwtTokenUtil implements Serializable {
   /** 存储过期Token Redis Key前缀 */
   private static final String REDIS_EXPIRED_TOKEN_KEY = "EXPIRED_TOKEN_";
 
-  /** 过期时间 5分钟(毫秒) */
-  private static final long EXPIRATION_TIME = 5 * 60 * 1000;
-
   /** JWT密码 */
   private static final String SECRET =
       "asdfljsafdjkaldsjfnejalskdfnvkjhasdfnasdjfhlksadfndvjhvasdnfnasnvlkjhasfdsadfasdfsadsdfjknsaasfdkjhasfdbhafd";
-
-  // TODO 用户修改密码 登出 重新登录操作需要 Token失效 或者刷新Token ，Redis 存不可登录的Token 。用户携带Token 进来，验证token,拿到userId
-  // ,和过期时间，去Redis 里面看看是否为黑名单Token，当修改密码，登出时，将原来的Token存进Redis里面，形成一个黑名单，这样子Token就失效了
 
   /** 签发JWT 自定义失效时间 */
   public String generateToken(String userName, long ttlMillis) {
