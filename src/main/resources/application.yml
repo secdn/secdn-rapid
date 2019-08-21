@@ -69,3 +69,19 @@ mybatis-plus:
     cache-enabled: false
     call-setters-on-nulls: true
 
+#打印sql
+logging:
+  level:
+    com:
+      secdn:
+        secdnrapid:
+          modules:
+            business:
+              mapper: debug
+            oss:
+              mapper: debug
+            sys:
+              mapper: debug
+  path: logs
+  config: classpath:logback-spring.xml
+
