@@ -8,8 +8,7 @@ import java.util.HashMap;
 import com.secdn.secdnrapid.common.utils.PageInfo;
 import com.secdn.secdnrapid.common.wrapper.WrapMapper;
 import com.secdn.secdnrapid.common.wrapper.Wrapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +32,7 @@ import ${package.Entity}.${entity};
 #else
 @Controller
 #end
+@Slf4j
 @Api(value="#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end", description="${entity} 控制器")
 @RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
 #if(${superControllerClass})
@@ -68,6 +68,7 @@ public class ${table.controllerName} {
      * @since : Create in ${date}
      */
     @PostMapping("/get${entity}ById/{id}")
+    @ApiOperation(value="/get${entity}ById/{id}", notes="通过id获取${entity}")
     @RequiresPermissions("business:${entity}:info")
     public Wrapper<HashMap<String, Object>> info(@PathVariable("id") Long id){
         ${entity} ${table.entityPath} = ${table.entityPath}Service.getById(id);
