@@ -1,8 +1,8 @@
 version: '3'
 services:
   secdn-rapid:
-    image: secdn/rapid
+    build: .
     ports:
-      - "8080:8080"
+      - "8986:8986"
     environment:
       - spring.profiles.active=prod
