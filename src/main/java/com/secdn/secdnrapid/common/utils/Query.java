@@ -3,6 +3,7 @@
 package com.secdn.secdnrapid.common.utils;
 
 
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secdn.secdnrapid.common.xss.SQLFilter;
@@ -66,9 +67,9 @@ public class Query<T> extends LinkedHashMap<String, Object> {
         //排序
         if(StringUtils.isNotBlank(orderByField) && StringUtils.isNotBlank(order)){
             if("ASC".equalsIgnoreCase(order)) {
-                this.page.setAsc(orderByField);
+                this.page.addOrder(OrderItem.asc(orderByField));
             }else {
-                this.page.setDesc(orderByField);
+                this.page.addOrder(OrderItem.desc(orderByField));
             }
         }
 
