@@ -1,27 +1,23 @@
 package com.secdn.secdnrapid.modules.business.convert;
 
-import com.secdn.secdnrapid.common.utils.BaseConvert;
 import com.secdn.secdnrapid.modules.business.dto.TestConvertDto;
 import com.secdn.secdnrapid.modules.business.entity.TestConvertEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
 
 /**
  * @author secdn
  * @create 2019-08-28
  */
-@Mapper(componentModel = "spring")
-public interface TestConvert extends BaseConvert<TestConvertEntity, TestConvertDto> {
+@Mapper
+public interface TestConvert {
+  TestConvert INSTANCE = Mappers.getMapper(TestConvert.class);
 
-  @Override
-  @Mappings({@Mapping(source = "userName", target = "name")})
+
+  @Mappings({})
   TestConvertDto entityToDto(TestConvertEntity testConvertEntity);
 
-  @Override
-  @Mappings({
-    @Mapping(source = "name", target = "userName"),
-    @Mapping(target = "password", ignore = true)
-  })
+  @Mappings({})
   TestConvertEntity dtoToEntity(TestConvertDto testConvertDto);
 }
