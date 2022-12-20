@@ -15,6 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 /** oauth2过滤器 */
 public class OAuth2Filter extends AuthenticatingFilter {
@@ -89,11 +90,11 @@ public class OAuth2Filter extends AuthenticatingFilter {
   /** 获取请求的token */
   private String getRequestToken(HttpServletRequest httpRequest) {
     // 从header中获取token
-    String token = httpRequest.getHeader("Authorization").replace("Bearer ", "");
+    String token = Optional.ofNullable(httpRequest.getHeader("Authorization")).map(e -> e.replace("Bearer ", "")).orElse(null);
 
     // 如果header中不存在token，则从参数中获取token
     if (StringUtils.isBlank(token)) {
-      token = httpRequest.getParameter("Authorization").replace("Bearer ", "");
+      token = Optional.ofNullable(httpRequest.getParameter("Authorization")).map(e -> e.replace("Bearer ", "")).orElse(null);
     }
 
     return token;
