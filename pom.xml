@@ -24,7 +24,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
         <jjwt.version>0.11.5</jjwt.version>
         <mybatisplus.spring.boot.version>3.5.2</mybatisplus.spring.boot.version>
         <druid.version>1.1.10</druid.version>
