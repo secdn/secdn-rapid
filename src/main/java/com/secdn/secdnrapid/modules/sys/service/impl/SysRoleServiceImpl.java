@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,8 +54,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean saveRole(SysRoleEntity role) {
-        role.setCreateTime(new Date());
-        this.saveOrUpdate(role);
+        role.setCreateTime(System.currentTimeMillis());
+		this.saveOrUpdate(role);
 
 
         //检查权限是否越权

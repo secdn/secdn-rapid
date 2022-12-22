@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Date;
 
 
 /**
@@ -85,7 +84,7 @@ public class SysLogAspect {
 		sysLog.setUsername(username);
 
 		sysLog.setTime(time);
-		sysLog.setCreateDate(new Date());
+		sysLog.setCreateTime(System.currentTimeMillis());
 		//保存系统日志
 		sysLogService.save(sysLog);
 	}

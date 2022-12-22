@@ -3,12 +3,9 @@
 package com.secdn.secdnrapid.modules.sys.entity;
 
 
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.util.Date;
 
 
 @TableName("sys_captcha")
@@ -22,7 +19,7 @@ public class SysCaptchaEntity {
     /**
      * 过期时间
      */
-    private Date expireTime;
+    private Long expireTime;
 
     public String getUuid() {
         return uuid;
@@ -40,11 +37,11 @@ public class SysCaptchaEntity {
         this.code = code;
     }
 
-    public Date getExpireTime() {
+    public Long getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Date expireTime) {
+    public void setExpireTime(Long expireTime) {
         this.expireTime = expireTime;
     }
 }

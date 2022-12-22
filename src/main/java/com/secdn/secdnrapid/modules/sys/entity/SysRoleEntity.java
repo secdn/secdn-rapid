@@ -9,14 +9,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 
 @TableName("sys_role")
 public class SysRoleEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * 角色ID
 	 */
@@ -33,7 +32,7 @@ public class SysRoleEntity implements Serializable {
 	 * 备注
 	 */
 	private String remark;
-	
+
 	/**
 	 * 创建者ID
 	 */
@@ -41,15 +40,15 @@ public class SysRoleEntity implements Serializable {
 
 	@TableField(exist=false)
 	private List<Long> menuIdList;
-	
+
 	/**
 	 * 创建时间
 	 */
-	private Date createTime;
+	private Long createTime;
 
 	/**
 	 * 设置：
-	 * @param roleId 
+	 * @param roleId
 	 */
 	public void setRoleId(Long roleId) {
 		this.roleId = roleId;
@@ -62,7 +61,7 @@ public class SysRoleEntity implements Serializable {
 	public Long getRoleId() {
 		return roleId;
 	}
-	
+
 	/**
 	 * 设置：角色名称
 	 * @param roleName 角色名称
@@ -78,7 +77,7 @@ public class SysRoleEntity implements Serializable {
 	public String getRoleName() {
 		return roleName;
 	}
-	
+
 	/**
 	 * 设置：备注
 	 * @param remark 备注
@@ -95,11 +94,11 @@ public class SysRoleEntity implements Serializable {
 		return remark;
 	}
 
-	public Date getCreateTime() {
+	public Long getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
 
@@ -118,5 +117,5 @@ public class SysRoleEntity implements Serializable {
 	public void setCreateUserId(Long createUserId) {
 		this.createUserId = createUserId;
 	}
-	
+
 }

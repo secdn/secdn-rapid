@@ -10,14 +10,13 @@ import com.secdn.secdnrapid.common.validator.group.UpdateGroup;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 
 @TableName("sys_user")
 public class SysUserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * 用户ID
 	 */
@@ -57,13 +56,13 @@ public class SysUserEntity implements Serializable {
 	 * 状态  0：禁用   1：正常
 	 */
 	private Integer status;
-	
+
 	/**
 	 * 角色ID列表
 	 */
 	@TableField(exist=false)
 	private List<Long> roleIdList;
-	
+
 	/**
 	 * 创建者ID
 	 */
@@ -72,11 +71,11 @@ public class SysUserEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	private Date createTime;
+	private Long createTime;
 
 	/**
 	 * 设置：
-	 * @param userId 
+	 * @param userId
 	 */
 	public void setUserId(Long userId) {
 		this.userId = userId;
@@ -89,7 +88,7 @@ public class SysUserEntity implements Serializable {
 	public Long getUserId() {
 		return userId;
 	}
-	
+
 	/**
 	 * 设置：用户名
 	 * @param username 用户名
@@ -105,7 +104,7 @@ public class SysUserEntity implements Serializable {
 	public String getUsername() {
 		return username;
 	}
-	
+
 	/**
 	 * 设置：密码
 	 * @param password 密码
@@ -121,7 +120,7 @@ public class SysUserEntity implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-	
+
 	/**
 	 * 设置：邮箱
 	 * @param email 邮箱
@@ -137,7 +136,7 @@ public class SysUserEntity implements Serializable {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	/**
 	 * 设置：手机号
 	 * @param mobile 手机号
@@ -153,7 +152,7 @@ public class SysUserEntity implements Serializable {
 	public String getMobile() {
 		return mobile;
 	}
-	
+
 	/**
 	 * 设置：状态  0：禁用   1：正常
 	 * @param status 状态  0：禁用   1：正常
@@ -169,20 +168,22 @@ public class SysUserEntity implements Serializable {
 	public Integer getStatus() {
 		return status;
 	}
-	
+
 	/**
 	 * 设置：创建时间
+	 *
 	 * @param createTime 创建时间
 	 */
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
 
 	/**
 	 * 获取：创建时间
-	 * @return Date
+	 *
+	 * @return Long
 	 */
-	public Date getCreateTime() {
+	public Long getCreateTime() {
 		return createTime;
 	}
 

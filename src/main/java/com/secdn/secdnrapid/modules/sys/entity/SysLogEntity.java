@@ -3,13 +3,10 @@
 package com.secdn.secdnrapid.modules.sys.entity;
 
 
-
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
-import java.util.Date;
-
 
 
 @TableName("sys_log")
@@ -30,7 +27,7 @@ public class SysLogEntity implements Serializable {
 	//IP地址
 	private String ip;
 	//创建时间
-	private Date createDate;
+	private Long createTime;
 
 	/**
 	 * 设置：
@@ -98,23 +95,26 @@ public class SysLogEntity implements Serializable {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+
 	/**
 	 * 获取：IP地址
 	 */
 	public String getIp() {
 		return ip;
 	}
+
 	/**
 	 * 设置：创建时间
 	 */
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreateTime(Long createTime) {
+		this.createTime = createTime;
 	}
+
 	/**
 	 * 获取：创建时间
 	 */
-	public Date getCreateDate() {
-		return createDate;
+	public Long getCreateTime() {
+		return createTime;
 	}
 
 	public Long getTime() {

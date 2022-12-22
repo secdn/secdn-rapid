@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!--<include resource="org/springframework/boot/logging/logback/base.xml" />-->
+    <property name="LOG_PATH" value="./logs"/>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
@@ -67,15 +67,16 @@
     <!-- 开发、测试环境 -->
     <springProfile name="dev,test">
         <root level="INFO">
-            <appender-ref ref="CONSOLE" />
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="INFO_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
         </root>
     </springProfile>
 
     <!-- 生产环境 -->
     <springProfile name="prod">
         <root level="ERROR">
-            <appender-ref ref="CONSOLE" />
-            <appender-ref ref="FILE" />
             <appender-ref ref="INFO_FILE" />
             <appender-ref ref="ERROR_FILE" />
         </root>
